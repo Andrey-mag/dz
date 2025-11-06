@@ -7,11 +7,12 @@ const Character = function (race, name, language) {
 };
 
 Character.prototype.speak = function () {
-  return `${this.language} ${this.name}`;
+  console.log(`${this.language} ${this.name}`);
 };
 
-function Ork(name) {
+function Ork(name, weapon) {
   Character.call(this, 'Ork', name, 'Орский');
+  this.weapon = weapon;
 }
 
 Ork.prototype = Object.create(Character.prototype);
@@ -19,7 +20,6 @@ Ork.prototype.constructor = Ork;
 Ork.prototype.hit = function () {
   console.log('Make a hit');
 };
-Ork.prototype.weapon = 'Дубина';
 
 function Elf(name) {
   Character.call(this, 'Elf', name, 'Эльфиский');
