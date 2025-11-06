@@ -21,12 +21,13 @@ Ork.prototype.hit = function () {
   console.log('Make a hit');
 };
 
-function Elf(name) {
+function Elf(name, spellType) {
   Character.call(this, 'Elf', name, 'Эльфиский');
+  this.spellType = spellType;
 }
 
 Elf.prototype = Object.create(Character.prototype);
-Elf.constructor = Elf;
+Elf.prototype.constructor = Elf;
 Elf.prototype.magic = function () {
   console.log('Применение заклинания');
 };
