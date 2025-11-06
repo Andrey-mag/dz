@@ -1,5 +1,4 @@
 'use strict';
-
 const Character = function (race, name, language) {
   this.race = race;
   this.name = name;
@@ -34,3 +33,4 @@ Elf.prototype.magic = function () {
 Elf.prototype.createMagic = function () {
   console.log('Создание заклинания');
 };
+
