@@ -1,36 +1,25 @@
 'use strict';
-const Character = function (race, name, language) {
-  this.race = race;
-  this.name = name;
-  this.language = language;
-};
 
-Character.prototype.speak = function () {
-  console.log(`${this.language} ${this.name}`);
-};
+class Car {
+  #brand = '';
+  #model = '';
+  #milage = '';
 
-function Ork(name, weapon) {
-  Character.call(this, 'Ork', name, 'Орский');
-  this.weapon = weapon;
+  constructor(brand, model, milage) {
+    this.#brand = brand;
+    this.#model = model;
+    this.#milage = milage;
+  }
+
+  get milage() {
+    return this.#milage;
+  }
+
+  set milage(value) {
+    this.#milage = value;
+  }
+
+  info() {
+    console.log(`${this.#brand} ${this.#model} ${this.#milage}`);
+  }
 }
-
-Ork.prototype = Object.create(Character.prototype);
-Ork.prototype.constructor = Ork;
-Ork.prototype.hit = function () {
-  console.log('Make a hit');
-};
-
-function Elf(name, spellType) {
-  Character.call(this, 'Elf', name, 'Эльфиский');
-  this.spellType = spellType;
-}
-
-Elf.prototype = Object.create(Character.prototype);
-Elf.prototype.constructor = Elf;
-Elf.prototype.magic = function () {
-  console.log('Применение заклинания');
-};
-Elf.prototype.createMagic = function () {
-  console.log('Создание заклинания');
-};
-
