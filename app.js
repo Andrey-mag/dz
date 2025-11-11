@@ -13,7 +13,7 @@ class Character {
 }
 
 class Ork extends Character {
-  constructor(name) {
+  constructor(name, weapon) {
     super('Ork', name, 'Оркский');
     this.weapon = weapon;
   }
@@ -47,3 +47,8 @@ class Elf extends Character {
     );
   }
 }
+
+const ork = new Ork('Fill', 'Sword');
+ork.speak;
+
+const elf = new Elf('Gendolf', 'Prima');
