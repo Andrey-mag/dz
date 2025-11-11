@@ -1,25 +1,49 @@
 'use strict';
 
-class Car {
-  #brand = '';
-  #model = '';
-  #milage = '';
-
-  constructor(brand, model, milage) {
-    this.#brand = brand;
-    this.#model = model;
-    this.#milage = milage;
+class Character {
+  constructor(race, name, language) {
+    this.race = race;
+    this.name = name;
+    this.language = language;
   }
 
-  get milage() {
-    return this.#milage;
+  speak() {
+    console.log(`${this.language} ${this.name}`);
+  }
+}
+
+class Ork extends Character {
+  constructor(name) {
+    super('Ork', name, 'Оркский');
+    this.weapon = weapon;
   }
 
-  set milage(value) {
-    this.#milage = value;
+  hit() {
+    console.log('Make a hit');
   }
 
-  info() {
-    console.log(`${this.#brand} ${this.#model} ${this.#milage}`);
+  speak() {
+    console.log(`Я ${this.name}, и я говорю по ${this.language}`);
+  }
+}
+
+class Elf extends Character {
+  constructor(name, spellType) {
+    super('Elf', name, 'Эльфиский');
+    this.spellType = spellType;
+  }
+
+  magic() {
+    console.log('Применение заклинания');
+  }
+
+  createMagic() {
+    console.log('Создание заклинания');
+  }
+
+  speak() {
+    console.log(
+      `Меня зовут ${this.name}, я разговариваю по ${this.language} пиу пиу`
+    );
   }
 }
