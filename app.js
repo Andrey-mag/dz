@@ -1,54 +1,38 @@
 'use strict';
 
-class Character {
-  constructor(race, name, language) {
-    this.race = race;
-    this.name = name;
-    this.language = language;
-  }
+function request() {
+  const req = new XMLHttpRequest();
+  req.open('GET', 'https://pokeapi.co/api/v2/pokemon/ditto');
+  req.send();
+  req.addEventListener('load', function () {
+    const data = JSON.parse(this.responseText);
 
-  speak() {
-    console.log(`${this.language} ${this.name}`);
-  }
+    if (!data || !data.abilities || !Array.isArray(data.abilities)) {
+      throw new Error('Invalid response structure');
+    }
+
+    const req1 = new XMLHttpRequest();
+    req1.open('GET', data.abilities[0].ability.url);
+    req1.send();
+    req1.addEventListener('load', function () {
+      const data1 = JSON.parse(this.responseText);
+
+      if (
+        !data1 ||
+        !data1.effect_entries ||
+        !Array.isArray(data1.effect_entries)
+      ) {
+        return;
+      }
+
+      const effectEntry = data1.effect_entries.find(
+        (item) => item.language.name === 'en'
+      );
+      if (effectEntry) {
+        console.log(effectEntry.effect);
+      }
+    });
+  });
 }
 
-class Ork extends Character {
-  constructor(name, weapon) {
-    super('Ork', name, 'Оркский');
-    this.weapon = weapon;
-  }
-
-  hit() {
-    console.log('Make a hit');
-  }
-
-  speak() {
-    console.log(`Я ${this.name}, и я говорю по ${this.language}`);
-  }
-}
-
-class Elf extends Character {
-  constructor(name, spellType) {
-    super('Elf', name, 'Эльфиский');
-    this.spellType = spellType;
-  }
-
-  magic() {
-    console.log('Применение заклинания');
-  }
-
-  createMagic() {
-    console.log('Создание заклинания');
-  }
-
-  speak() {
-    console.log(
-      `Меня зовут ${this.name}, я разговариваю по ${this.language} пиу пиу`
-    );
-  }
-}
-
-const ork = new Ork('Fill', 'Sword');
-ork.speak;
-
-const elf = new Elf('Gendolf', 'Prima');
+request();
