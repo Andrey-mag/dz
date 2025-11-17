@@ -1,38 +1,45 @@
 'use strict';
 
 function request() {
-  const req = new XMLHttpRequest();
-  req.open('GET', 'https://pokeapi.co/api/v2/pokemon/ditto');
-  req.send();
-  req.addEventListener('load', function () {
-    const data = JSON.parse(this.responseText);
+  fetch('https://pokeapi.co/api/v2/pokemon/ditto')
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('request error');
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (!data || !data.abilities || !Array.isArray(data.abilities)) {
+        throw new Error('Invalid response structure');
+      }
 
-    if (!data || !data.abilities || !Array.isArray(data.abilities)) {
-      throw new Error('Invalid response structure');
-    }
+      return fetch(data.abilities[0].ability.url);
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('request error');
+      }
 
-    const req1 = new XMLHttpRequest();
-    req1.open('GET', data.abilities[0].ability.url);
-    req1.send();
-    req1.addEventListener('load', function () {
-      const data1 = JSON.parse(this.responseText);
-
+      return response.json();
+    })
+    .then((data1) => {
       if (
         !data1 ||
         !data1.effect_entries ||
         !Array.isArray(data1.effect_entries)
       ) {
-        return;
+        throw new Error('Invalid response structure');
       }
 
       const effectEntry = data1.effect_entries.find(
         (item) => item.language.name === 'en'
       );
+
       if (effectEntry) {
         console.log(effectEntry.effect);
       }
-    });
-  });
+    })
+    .catch((error) => error.message);
 }
 
 request();
