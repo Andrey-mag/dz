@@ -38,7 +38,8 @@ function request() {
       if (effectEntry) {
         console.log(effectEntry.effect);
       }
-    });
+    })
+    .catch((error) => error.message);
 }
 
 request();
