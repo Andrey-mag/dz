@@ -1,31 +1,39 @@
 'use strict';
 
-function getCurrentPositionPromise() {
-  return new Promise((resolve, rejected) => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
+(function () {
+  const buttonWrapper = document.querySelector('.button-wrapper');
+  const counter = document.querySelector('.counter');
+  let activeButton = null;
 
-        resolve({
-          latitude,
-          longitude,
-        });
-      },
+  function init() {
+    counter.textContent = 0;
 
-      (error) => {
-        rejected(error);
+    for (let i = 1; i <= 5; i++) {
+      const el = document.createElement('button');
+      el.textContent = `Нажми меня`;
+      el.setAttribute(
+        'style',
+        'width:100px;height:32px; border-radius:32px; border:transparent;'
+      );
+      buttonWrapper.appendChild(el);
+    }
+  }
+
+  init();
+
+  if (!buttonWrapper) {
+    return;
+  }
+
+  [...buttonWrapper.children].forEach((item) => {
+    item.addEventListener('click', function () {
+      if (activeButton && activeButton !== item) {
+        activeButton.textContent = 'Нажми меня';
       }
-    );
-  });
-}
 
-getCurrentPositionPromise()
-  .then((data) => {
-    console.log('Position:', data);
-  })
-  .catch((error) => {
-    console.error('Error:', error.message);
-  })
-  .finally(() => {
-    console.log('Request complete');
+      item.textContent = 'Нажата';
+      activeButton = item;
+      counter.textContent = Number(counter.textContent) + 1;
+    });
   });
+})();
