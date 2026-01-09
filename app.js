@@ -31,7 +31,7 @@
         activeButton.textContent = 'Нажми меня';
       }
 
-      item.textContent = 'Нажата';
+      item.textContent = 'Нажата!';
       activeButton = item;
       counter.textContent = Number(counter.textContent) + 1;
     });
